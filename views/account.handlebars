@@ -1,19 +1,24 @@
 <!doctype html>
 <html>
 
-<!-- STYLESHEETS -->
-<link rel="stylesheet" type="text/css" href="css/account.css">
+	<head>
+		<title>Photo Feed</title>
+		<!-- STYLESHEETS -->
+		<link rel="stylesheet" type="text/css" href="css/assignment1.css">
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
 
+		<h1 class="text-center">Account</h1>
+		</br>
+		<div class="account-info text-center" id="account-div">
+		    <p>ID: {{user.id}}</p>
+		    <p>Username: {{user.username}}</p>
+		    <p>Name:{{user.displayName}}</p>
+		</div>
 
-<div class="account-info" id="account-div">
-    <p>ID: {{user.id}}</p>
-    <p>Username: {{user.username}}</p>
-    <p>Name:{{user.displayName}}</p>
-</div>
-
-<div class="btn-div">
-    <a class="btn" href="/photos">Take me to my feed</a>
-    <a class="btn" href="/logout">Log Out</a>
-</div>
-
+		<div class="btnContainer text-center">
+		    <a class="btn" href="/photos">Posts You've Liked</a>
+		    <a class="btn" href="/logout">Log Out</a>
+		</div>
+	</head>
 </html>

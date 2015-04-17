@@ -27,6 +27,7 @@ var FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
 var FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET;
 var FACEBOOK_CALLBACK_URL = process.env.FACEBOOK_CALLBACK_URL;
 var INSTAGRAM_ACCESS_TOKEN = "";
+var FACEBOOK_ACCESS_TOKEN ="";
 
 Instagram.set('client_id', INSTAGRAM_CLIENT_ID);
 Instagram.set('client_secret', INSTAGRAM_CLIENT_SECRET);
@@ -89,8 +90,14 @@ passport.use(new InstagramStrategy({
   }
 ));
 
-
-
+//ADDED TO AUTHETIC FACEBOOK
+//PUT CODE HERE, THERE's STILL SOME BUGS IN THE CODE I SENT YOU
+//PASSPORT.USE Function Goes here
+//TRY TO DEBUG. WE NEED TO MAKE INSTAGRAM ACCESS TOKEN AND
+//FACEBOOK ACCESS TOKEN VARY DIFFERENTLY
+//WE GET THE ERROR CAUSE FACEBOOK IS TRYING TO READ
+//INSTAGRAM'S ACCESS TOKEN
+//ADDED TO AUTHENTIATE FACEBOOK END
 
 //Configures the Template engine
 app.engine('handlebars', handlebars({defaultLayout: 'layout'}));
@@ -159,6 +166,12 @@ app.get('/photos', ensureAuthenticated, function(req, res){
   });
 });
 
+//FACEBOOK AUTH
+//FACEBOOK AUTH END
+
+
+
+
 
 // GET /auth/instagram
 //   Use passport.authenticate() as route middleware to authenticate the
@@ -187,6 +200,12 @@ app.get('/auth/instagram/callback',
   });
 
 
+
+app.get('/auth/facebook/callback', 
+  passport.authenticate('facebook', { failureRedirect: '/login'}),
+  function(req, res) {
+    res.redirect('/account');
+  });
 
 
 

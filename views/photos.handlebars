@@ -1,11 +1,21 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+	<head>
+		<title>Photo Feed</title>
+		<link rel="stylesheet" type="text/css" href="css/assignment1.css">
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="css/photos.css">
-	 {{#each photos}}
-	   <img src="{{url}}" class="img-responsive" class="img hashtag-img">
-	   </br>   </br>   </br>   </br>   </br>
-	   <div id="caption-div"> {{caption}} </div>
-	 {{/each}}
+		<h1 class="text-center">Photo Feed</h1>
+		</br>
+		{{#each photos}}
+			<div class="photoContainer text-center">
+			   <img src="{{url}}" class="img-responsive img-centered" class="img hashtag-img photoContain">
+			   </br>
+			   <div id="caption-div" class="captionContainer"> {{caption}} </div>
+			   </br>
+			</div>
+		{{/each}}
+	 </head>
  
  </html>
