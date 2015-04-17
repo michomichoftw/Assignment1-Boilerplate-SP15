@@ -2,6 +2,7 @@
 var express = require('express');
 var passport = require('passport');
 var InstagramStrategy = require('passport-instagram').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 var http = require('http');
 var path = require('path');
 var handlebars = require('express-handlebars');
@@ -10,6 +11,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var dotenv = require('dotenv');
 var Instagram = require('instagram-node-lib');
+var Facebook = require('fbgraph');
 var mongoose = require('mongoose');
 var app = express();
 
@@ -21,9 +23,15 @@ dotenv.load();
 var INSTAGRAM_CLIENT_ID = process.env.INSTAGRAM_CLIENT_ID;
 var INSTAGRAM_CLIENT_SECRET = process.env.INSTAGRAM_CLIENT_SECRET;
 var INSTAGRAM_CALLBACK_URL = process.env.INSTAGRAM_CALLBACK_URL;
+var FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
+var FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET;
+var FACEBOOK_CALLBACK_URL = process.env.FACEBOOK_CALLBACK_URL;
 var INSTAGRAM_ACCESS_TOKEN = "";
+
 Instagram.set('client_id', INSTAGRAM_CLIENT_ID);
 Instagram.set('client_secret', INSTAGRAM_CLIENT_SECRET);
+//Facebook.set('app_id', FACEBOOK_APP_ID);
+//Facebook.set('app_secret', FACEBOOK_APP_SECRET);
 
 //connect to database
 mongoose.connect(process.env.MONGODB_CONNECTION_URL);
@@ -80,6 +88,9 @@ passport.use(new InstagramStrategy({
     });
   }
 ));
+
+
+
 
 //Configures the Template engine
 app.engine('handlebars', handlebars({defaultLayout: 'layout'}));
@@ -138,6 +149,7 @@ app.get('/photos', ensureAuthenticated, function(req, res){
             tempJSON = {};
             tempJSON.url = item.images.low_resolution.url;
             //insert json object into image array
+            tempJSON.caption = item.caption.text;
             return tempJSON;
           });
           res.render('photos', {photos: imageArr});
@@ -160,6 +172,9 @@ app.get('/auth/instagram',
     // function will not be called.
   });
 
+
+
+
 // GET /auth/instagram/callback
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  If authentication fails, the user will be redirected back to the
@@ -170,6 +185,13 @@ app.get('/auth/instagram/callback',
   function(req, res) {
     res.redirect('/account');
   });
+
+
+
+
+
+
+
 
 app.get('/logout', function(req, res){
   req.logout();
